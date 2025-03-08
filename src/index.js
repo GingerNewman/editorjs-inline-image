@@ -55,6 +55,7 @@ export default class InlineImage {
       readOnly,
       onAddImageData: (imageData) => this.addImageData(imageData),
       onTuneToggled: (tuneName) => this.tuneToggled(tuneName),
+      onResize: (dimensions) => this.handleResize(dimensions),
     });
 
     this.data = {
@@ -64,6 +65,21 @@ export default class InlineImage {
       withBackground: data.withBackground !== undefined ? data.withBackground : false,
       stretched: data.stretched !== undefined ? data.stretched : false,
       unsplash: data.unsplash,
+      width: data.width || null,
+      height: data.height || null,
+    };
+  }
+
+  /**
+   * Handles image resize event
+   *
+   * @param {object} dimensions - Object containing the new width and height
+   * @returns {void}
+   */
+  handleResize(dimensions) {
+    this.data = {
+      width: dimensions.width,
+      height: dimensions.height,
     };
   }
 
@@ -112,6 +128,8 @@ export default class InlineImage {
       withBorder: {},
       withBackground: {},
       stretched: {},
+      width: {},
+      height: {},
       caption: {
         br: true,
       },

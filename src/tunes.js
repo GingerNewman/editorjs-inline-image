@@ -35,7 +35,11 @@ export default class Tunes {
 
       el.classList.add(this.cssClasses.settingsButton);
       el.dataset.tune = tune.name;
-      el.classList.toggle(this.cssClasses.settingsButtonActive, data[tune.name]);
+
+      // Only add active class for toggle-type tunes, not for action tunes like 'size'
+      if (tune.name !== 'size') {
+        el.classList.toggle(this.cssClasses.settingsButtonActive, data[tune.name]);
+      }
 
       this.buttons.push(el);
       wrapper.appendChild(el);
@@ -52,10 +56,13 @@ export default class Tunes {
   tuneClicked(tuneName) {
     const button = this.buttons.find((el) => el.dataset.tune === tuneName);
 
-    button.classList.toggle(
-      this.cssClasses.settingsButtonActive,
-      !button.classList.contains(this.cssClasses.settingsButtonActive),
-    );
+    // For action tunes like 'size', don't toggle the active class
+    if (tuneName !== 'size') {
+      button.classList.toggle(
+        this.cssClasses.settingsButtonActive,
+        !button.classList.contains(this.cssClasses.settingsButtonActive),
+      );
+    }
 
     this.onTuneToggled(tuneName);
   }
